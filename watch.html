@@ -75,27 +75,10 @@
 			const isTriggerVideo = title.includes(triggerTitle);
 
 			if (isTriggerVideo) {
-				// --- swap the uploader/channel name everywhere it appears on the page ---
+				// --- swap the uploader/channel name ---
 				const channelLink = document.querySelector(".yt2009-channel-link");
-				const originalName = channelLink ? channelLink.textContent.trim() : "";
-				const newName = "dunstan1234";
-
-				if (originalName) {
-					const walker = document.createTreeWalker(
-						document.body,
-						NodeFilter.SHOW_TEXT,
-						null
-					);
-					const nodesToUpdate = [];
-					let node;
-					while ((node = walker.nextNode())) {
-						if (node.nodeValue.indexOf(originalName) !== -1) {
-							nodesToUpdate.push(node);
-						}
-					}
-					nodesToUpdate.forEach(function (textNode) {
-						textNode.nodeValue = textNode.nodeValue.split(originalName).join(newName);
-					});
+				if (channelLink) {
+					channelLink.textContent = "dunstan1234";
 				}
 
 				// --- inject fake comments ---
@@ -132,121 +115,64 @@
 				}
 			}
 
-			if (isTriggerVideo) {
-				// --- set the fake view count ---
-				const viewCountEl = document.getElementById("watch-view-count");
-				if (viewCountEl) viewCountEl.textContent = "13,300";
-			}
+			if (!video) return;
 
-			// --- robust "ended" wiring: survives initPlayer() rebuilding the <video> node ---
-			function runEndedEffects() {
-				setTimeout(function () {
-					// darken the whole page
-					document.documentElement.style.backgroundColor = "black";
-					document.body.style.backgroundColor = "black";
+			video.addEventListener("ended", function () {
+				if (isTriggerVideo) {
+					setTimeout(function () {
+						// darken the whole page
+						document.documentElement.style.backgroundColor = "black";
+						document.body.style.backgroundColor = "black";
 
-					// blackout the channel banner/avatar
-					const channelIcon = document.querySelector("#watch-channel-icon");
-					if (channelIcon) {
-						channelIcon.style.backgroundColor = "black";
-						const avatarImg = channelIcon.querySelector("img");
-						if (avatarImg) {
-							avatarImg.style.visibility = "hidden";
-						}
-					}
+						// find every thumbnail-looking image in the sidebar / related videos area
+						// (covers common yt2009 thumbnail patterns without touching the
+						// channel icon, logo, or player itself)
+						const thumbSelectors = [
+							"#watch-related-discoverbox img",
+							"#watch-related-vids-body img",
+							".watch-discoverbox img",
+							".video-thumb img",
+							"a.yt-uix-sessionlink img",
+							"img.vimg"
+						];
 
-					// replace the main player video with test.mp4
-					const playerDiv = document.querySelector("#watch-player-div");
-					const mainVideo = playerDiv ? playerDiv.querySelector("video") : null;
-					if (mainVideo) {
-						mainVideo.pause();
-						mainVideo.src = "/test.mp4";
-						mainVideo.loop = true;
-						mainVideo.load();
-						mainVideo.play().catch(function () {});
-					}
-
-					// find every thumbnail-looking image in the sidebar / related videos area
-					const thumbSelectors = [
-						"#watch-related-discoverbox img",
-						"#watch-related-vids-body img",
-						".watch-discoverbox img",
-						".video-thumb img",
-						"a.yt-uix-sessionlink img",
-						"img.vimg"
-					];
-
-					const seen = new Set();
-					const thumbs = [];
-					thumbSelectors.forEach(function (sel) {
-						document.querySelectorAll(sel).forEach(function (img) {
-							if (!seen.has(img)) {
-								seen.add(img);
-								thumbs.push(img);
-							}
+						const seen = new Set();
+						const thumbs = [];
+						thumbSelectors.forEach(function (sel) {
+							document.querySelectorAll(sel).forEach(function (img) {
+								if (!seen.has(img)) {
+									seen.add(img);
+									thumbs.push(img);
+								}
+							});
 						});
-					});
 
-					thumbs.forEach(function (img) {
-						const rect = img.getBoundingClientRect();
-						const width = img.width || rect.width || 120;
-						const height = img.height || rect.height || 90;
+						thumbs.forEach(function (img) {
+							const rect = img.getBoundingClientRect();
+							const width = img.width || rect.width || 120;
+							const height = img.height || rect.height || 90;
 
-						// make sure the overlay positions relative to the image's own box
-						const parent = img.parentElement;
-						if (parent && getComputedStyle(parent).position === "static") {
-							parent.style.position = "relative";
-						}
+							const vid = document.createElement("video");
+							vid.src = "/test.mp4";
+							vid.autoplay = true;
+							vid.loop = true;
+							vid.muted = true;
+							vid.playsInline = true;
+							vid.controls = false;
+							vid.width = width;
+							vid.height = height;
+							vid.style.width = width + "px";
+							vid.style.height = height + "px";
+							vid.style.objectFit = "cover";
 
-						const vid = document.createElement("video");
-						vid.src = "/test.mp4";
-						vid.autoplay = true;
-						vid.loop = true;
-						vid.muted = true;
-						vid.playsInline = true;
-						vid.controls = false;
-						vid.width = width;
-						vid.height = height;
+							// carry over any classes so existing layout/styling still applies
+							vid.className = img.className;
 
-						// overlay directly on top of the original image, which stays
-						// fully intact in the DOM so click/navigation logic keeps working
-						vid.style.position = "absolute";
-						vid.style.top = img.offsetTop + "px";
-						vid.style.left = img.offsetLeft + "px";
-						vid.style.width = width + "px";
-						vid.style.height = height + "px";
-						vid.style.objectFit = "cover";
-						vid.style.pointerEvents = "none";
-						vid.style.zIndex = "2";
-
-						if (parent) {
-							parent.appendChild(vid);
-						}
-					});
-				}, 3000);
-			}
-
-			function attachEndedListener(videoEl) {
-				if (!videoEl || videoEl.dataset.yt2009EndedBound) return;
-				videoEl.dataset.yt2009EndedBound = "1";
-				videoEl.addEventListener("ended", function () {
-					if (isTriggerVideo) runEndedEffects();
-				});
-			}
-
-			// initial attach, in case initPlayer already ran or there's no rebuild
-			attachEndedListener(video);
-
-			// watch for initPlayer() (or anything else) swapping out the video element,
-			// and re-bind the listener to whatever <video> ends up inside the player div
-			const playerContainer = document.querySelector("#watch-player-div");
-			if (playerContainer && window.MutationObserver) {
-				const observer = new MutationObserver(function () {
-					const currentVideo = playerContainer.querySelector("video");
-					if (currentVideo) attachEndedListener(currentVideo);
-				});
-				observer.observe(playerContainer, { childList: true, subtree: true });
-			}
+							img.replaceWith(vid);
+						});
+					}, 3000);
+				}
+			});
 		});
 	</script>
 
