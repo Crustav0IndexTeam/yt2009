@@ -263,7 +263,7 @@ ${ap == 2 ? avatarCode : ""}
     <id>http://gdata.youtube.com/feeds/api/videos</id>
     <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#video'/>
     <title type='text'>YouTube Videos</title>
-    <logo>http://www.youtube.com/img/pic_youtubelogo_123x63.gif</logo>
+    <logo>Crustav0IndexTeam/yt2009/back/pic_youtubelogo_123x63 (1).gif</logo>
     <link rel='alternate' type='text/html' href='http://www.youtube.com'/>
     <link rel='http://schemas.google.com/g/2005#feed' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos'/>
     <link rel='http://schemas.google.com/g/2005#batch' type='application/atom+xml' href='http://gdata.youtube.com/feeds/api/videos/batch'/>
@@ -853,7 +853,7 @@ ${ap == 2 ? avatarCode : ""}
     <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#playlist'/>
     <title type='text'>${sd(title)}</title>
     <subtitle type='text' />
-    <logo>http://www.youtube.com/img/pic_youtubelogo_123x63.gif</logo>
+    <logo>Crustav0IndexTeam/yt2009/back/pic_youtubelogo_123x63 (1).gif</logo>
     <link rel='alternate' type='text/html' href='http://www.youtube.com/view_play_list?p=${id}'/>
     <link rel='http://schemas.google.com/g/2005#feed' type='application/atom+xml' href='http://${config.ip}:${config.port}/feeds/api/playlists/${id}?r=2'/>
     <link rel='http://schemas.google.com/g/2005#batch' type='application/atom+xml' href='http://${config.ip}:${config.port}/feeds/api/playlists/${id}/batch'/>
@@ -1144,7 +1144,7 @@ ${ap == 2 ? avatarCode : ""}
         <updated>2010-12-21T18:59:58.000-08:00</updated>
         <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#video'/>
         <title type='text'>vds</title>
-        <logo>http://www.youtube.com/img/pic_youtubelogo_123x63.gif</logo>
+        <logo>Crustav0IndexTeam/yt2009/back/pic_youtubelogo_123x63 (1).gif</logo>
         <author>
             <name>YouTube</name>
             <uri>http://www.youtube.com/</uri>
@@ -1160,7 +1160,7 @@ ${ap == 2 ? avatarCode : ""}
     <updated>2010-12-21T18:59:58.000-08:00</updated>
     <category scheme='http://schemas.google.com/g/2005#kind' term='http://gdata.youtube.com/schemas/2007#video'/>
     <title type='text'> </title>
-    <logo>http://www.youtube.com/img/pic_youtubelogo_123x63.gif</logo>
+    <logo>Crustav0IndexTeam/yt2009/back/pic_youtubelogo_123x63 (1).gif</logo>
     <author>
         <name>YouTube</name>
         <uri>http://www.youtube.com/</uri>
@@ -3157,7 +3157,7 @@ term='channel'/>
         <category domain='http://schemas.google.com/g/2005#kind'>http://gdata.youtube.com/schemas/2007#video</category>
         <title>${feedName}</title>
         <image>
-            <url>http://www.youtube.com/img/pic_youtubelogo_123x63.gif</url>
+            <url>Crustav0IndexTeam/yt2009/back/pic_youtubelogo_123x63 (1).gif</url>
             <title>${feedName}</title>
             <link>http://www.youtube.com/browse?s=bzb</link>
         </image>
