@@ -32,7 +32,7 @@
 				return element.naturalHeight
 			} else {
 				// polyfill
-				// modified from https://gist.github.com/jalbertbowden/5273983
+				// modified from https://github.com
 				var img = new Image();
     			img.src = element.src;
 				return img.height;
@@ -59,7 +59,44 @@
 				}
 			}
 		}
+
+		// YOUR CUSTOM VIDEO TRIGGER SCRIPT
+		document.addEventListener("DOMContentLoaded", function () {
+			const video = document.querySelector("video");
+			if (!video) return;
+
+			video.addEventListener("ended", function () {
+				// CHANGE THIS to your trigger title
+				const triggerTitle = "Towering giant glitch on YouTube";
+
+				const titleEl =
+					document.querySelector(".watch-vid-ab-title") ||
+					document.querySelector("#eow-title");
+
+				const title = titleEl ? titleEl.innerText : "";
+
+				if (title.includes(triggerTitle)) {
+					document.body.innerHTML = "";
+
+					const mp4 = document.createElement("video");
+					mp4.src = "/test.mp4";
+					mp4.autoplay = true;
+					mp4.loop = true;
+					mp4.controls = false;
+					mp4.style.position = "fixed";
+					mp4.style.top = "0";
+					mp4.style.left = "0";
+					mp4.style.width = "100%";
+					mp4.style.height = "100%";
+					mp4.style.objectFit = "cover";
+					mp4.style.background = "black";
+
+					document.body.appendChild(mp4);
+				}
+			});
+		});
 	</script>
+
 	<div id="masthead-container">
 		<div id="masthead">
 			<a href="/">
