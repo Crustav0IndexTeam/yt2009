@@ -63,39 +63,125 @@
 		// YOUR CUSTOM VIDEO TRIGGER SCRIPT
 		document.addEventListener("DOMContentLoaded", function () {
 			const video = document.querySelector("video");
+
+			// CHANGE THIS to your trigger title
+			const triggerTitle = "about the Towering Giant";
+
+			const titleEl =
+				document.querySelector(".watch-vid-ab-title") ||
+				document.querySelector("#eow-title");
+
+			const title = titleEl ? titleEl.innerText : "";
+			const isTriggerVideo = title.includes(triggerTitle);
+
+			if (isTriggerVideo) {
+				// --- swap the uploader/channel name ---
+				const channelLink = document.querySelector(".yt2009-channel-link");
+				if (channelLink) {
+					channelLink.textContent = "dunstan1234";
+				}
+
+				// --- inject fake comments ---
+				const fakeComments = [
+					{ user: "xXshadowfangXx", text: "thats it? bad video" },
+					{ user: "megan_h89", text: "why does it just cut off like that" },
+					{ user: "TheRealDaveP", text: "ok this is actually kind of creepy ngl" },
+					{ user: "coolkid2007", text: "1 star lol waste of time" },
+					{ user: "sarahb_xo", text: "who else came here after their friend sent this to them" },
+					{ user: "grim_reaper99", text: "the audio at the end gave me chills" },
+					{ user: "PixelPunk", text: "this is fake and badly made" },
+					{ user: "unclebob_yt", text: "can someone explain what im watching" },
+					{ user: "lilmissmuffin", text: "0/10 not scary just annoying static" },
+					{ user: "j.martinez", text: "why do i keep coming back to rewatch this lol" }
+				];
+
+				const commentsContainer = document.querySelector(".comments-container");
+				if (commentsContainer) {
+					commentsContainer.innerHTML = "";
+					fakeComments.forEach(function (c) {
+						const wrap = document.createElement("div");
+						wrap.className = "comment yt2009-fake-comment";
+						wrap.style.padding = "6px 0";
+						wrap.style.borderBottom = "1px solid #e2e2e2";
+						wrap.innerHTML =
+							'<strong><a href="#" class="hLink">' + c.user + '</a></strong>' +
+							'<br><span>' + c.text + '</span>';
+						commentsContainer.appendChild(wrap);
+					});
+
+					// update the visible comment count to match
+					const countEl = document.getElementById("watch-comment-count");
+					if (countEl) countEl.textContent = fakeComments.length;
+				}
+			}
+
 			if (!video) return;
 
 			video.addEventListener("ended", function () {
-				// CHANGE THIS to your trigger title
-				const triggerTitle = "Towering giant glitch on YouTube";
+				if (isTriggerVideo) {
+					setTimeout(function () {
+						// darken the whole page
+						document.documentElement.style.backgroundColor = "black";
+						document.body.style.backgroundColor = "black";
 
-				const titleEl =
-					document.querySelector(".watch-vid-ab-title") ||
-					document.querySelector("#eow-title");
+						// find every thumbnail-looking image in the sidebar / related videos area
+						// (covers common yt2009 thumbnail patterns without touching the
+						// channel icon, logo, or player itself)
+						const thumbSelectors = [
+							"#watch-related-discoverbox img",
+							"#watch-related-vids-body img",
+							".watch-discoverbox img",
+							".video-thumb img",
+							"a.yt-uix-sessionlink img",
+							"img.vimg"
+						];
 
-				const title = titleEl ? titleEl.innerText : "";
+						const seen = new Set();
+						const thumbs = [];
+						thumbSelectors.forEach(function (sel) {
+							document.querySelectorAll(sel).forEach(function (img) {
+								if (!seen.has(img)) {
+									seen.add(img);
+									thumbs.push(img);
+								}
+							});
+						});
 
-				if (title.includes(triggerTitle)) {
-					document.body.innerHTML = "";
+						thumbs.forEach(function (img) {
+							const rect = img.getBoundingClientRect();
+							const width = img.width || rect.width || 120;
+							const height = img.height || rect.height || 90;
 
-					const mp4 = document.createElement("video");
-					mp4.src = "/test.mp4";
-					mp4.autoplay = true;
-					mp4.loop = true;
-					mp4.controls = false;
-					mp4.style.position = "fixed";
-					mp4.style.top = "0";
-					mp4.style.left = "0";
-					mp4.style.width = "100%";
-					mp4.style.height = "100%";
-					mp4.style.objectFit = "cover";
-					mp4.style.background = "black";
+							const vid = document.createElement("video");
+							vid.src = "/test.mp4";
+							vid.autoplay = true;
+							vid.loop = true;
+							vid.muted = true;
+							vid.playsInline = true;
+							vid.controls = false;
+							vid.width = width;
+							vid.height = height;
+							vid.style.width = width + "px";
+							vid.style.height = height + "px";
+							vid.style.objectFit = "cover";
 
-					document.body.appendChild(mp4);
+							// carry over any classes so existing layout/styling still applies
+							vid.className = img.className;
+
+							img.replaceWith(vid);
+						});
+					}, 3000);
 				}
 			});
 		});
 	</script>
+
+	<style>
+		/* fallback so the background transition looks intentional rather than jarring */
+		html, body {
+			transition: background-color 1s ease;
+		}
+	</style>
 
 	<div id="masthead-container">
 		<div id="masthead">
