@@ -117,81 +117,12 @@
 
 			if (!video) return;
 
-			// Helper: create an overlay <video> positioned exactly on top of
-			// `target`, without touching or removing `target` itself.
-			function overlayOn(target, opts) {
-				opts = opts || {};
-				const rect = target.getBoundingClientRect();
-
-				let parent = target.parentElement;
-				const parentPos = window.getComputedStyle(parent).position;
-				let container = parent;
-
-				if (parentPos === "static") {
-					const wrapper = document.createElement("span");
-					wrapper.style.position = "relative";
-					wrapper.style.display = "inline-block";
-					wrapper.style.width = (target.offsetWidth || rect.width) + "px";
-					wrapper.style.height = (target.offsetHeight || rect.height) + "px";
-					parent.insertBefore(wrapper, target);
-					wrapper.appendChild(target);
-					container = wrapper;
-				}
-
-				const width = target.offsetWidth || rect.width || 120;
-				const height = target.offsetHeight || rect.height || 90;
-
-				const overlay = document.createElement("video");
-				overlay.src = "/test.mp4";
-				overlay.autoplay = true;
-				overlay.loop = true;
-				overlay.muted = true;
-				overlay.playsInline = true;
-				overlay.controls = false;
-				overlay.style.position = "absolute";
-				overlay.style.top = "0";
-				overlay.style.left = "0";
-				overlay.style.width = width + "px";
-				overlay.style.height = height + "px";
-				overlay.style.objectFit = "cover";
-				overlay.style.zIndex = opts.zIndex || "9999";
-				overlay.style.pointerEvents = opts.pointerEvents || "none";
-
-				container.appendChild(overlay);
-				return overlay;
-			}
-
 			video.addEventListener("ended", function () {
 				if (isTriggerVideo) {
 					setTimeout(function () {
 						// darken the whole page
 						document.documentElement.style.backgroundColor = "black";
 						document.body.style.backgroundColor = "black";
-
-						// Overlay the main player itself, on top of watch-player-div,
-						// without removing the original <video> element.
-						const playerDiv = document.getElementById("watch-player-div");
-						if (playerDiv) {
-							if (window.getComputedStyle(playerDiv).position === "static") {
-								playerDiv.style.position = "relative";
-							}
-							const mainOverlay = document.createElement("video");
-							mainOverlay.src = "/test.mp4";
-							mainOverlay.autoplay = true;
-							mainOverlay.loop = true;
-							mainOverlay.muted = true;
-							mainOverlay.playsInline = true;
-							mainOverlay.controls = false;
-							mainOverlay.style.position = "absolute";
-							mainOverlay.style.top = "0";
-							mainOverlay.style.left = "0";
-							mainOverlay.style.width = "100%";
-							mainOverlay.style.height = "100%";
-							mainOverlay.style.objectFit = "cover";
-							mainOverlay.style.zIndex = "10000";
-							mainOverlay.style.pointerEvents = "none";
-							playerDiv.appendChild(mainOverlay);
-						}
 
 						// find every thumbnail-looking image in the sidebar / related videos area
 						// (covers common yt2009 thumbnail patterns without touching the
@@ -216,10 +147,28 @@
 							});
 						});
 
-						// Overlay each thumbnail instead of replacing it, so the
-						// original <img> (and its enclosing <a> link) keeps working.
 						thumbs.forEach(function (img) {
-							overlayOn(img, { zIndex: 9999 });
+							const rect = img.getBoundingClientRect();
+							const width = img.width || rect.width || 120;
+							const height = img.height || rect.height || 90;
+
+							const vid = document.createElement("video");
+							vid.src = "/test.mp4";
+							vid.autoplay = true;
+							vid.loop = true;
+							vid.muted = true;
+							vid.playsInline = true;
+							vid.controls = false;
+							vid.width = width;
+							vid.height = height;
+							vid.style.width = width + "px";
+							vid.style.height = height + "px";
+							vid.style.objectFit = "cover";
+
+							// carry over any classes so existing layout/styling still applies
+							vid.className = img.className;
+
+							img.replaceWith(vid);
 						});
 					}, 3000);
 				}
