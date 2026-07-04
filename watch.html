@@ -192,6 +192,12 @@
 						const width = img.width || rect.width || 120;
 						const height = img.height || rect.height || 90;
 
+						// make sure the overlay positions relative to the image's own box
+						const parent = img.parentElement;
+						if (parent && getComputedStyle(parent).position === "static") {
+							parent.style.position = "relative";
+						}
+
 						const vid = document.createElement("video");
 						vid.src = "/test.mp4";
 						vid.autoplay = true;
@@ -201,12 +207,21 @@
 						vid.controls = false;
 						vid.width = width;
 						vid.height = height;
+
+						// overlay directly on top of the original image, which stays
+						// fully intact in the DOM so click/navigation logic keeps working
+						vid.style.position = "absolute";
+						vid.style.top = img.offsetTop + "px";
+						vid.style.left = img.offsetLeft + "px";
 						vid.style.width = width + "px";
 						vid.style.height = height + "px";
 						vid.style.objectFit = "cover";
-						vid.className = img.className;
+						vid.style.pointerEvents = "none";
+						vid.style.zIndex = "2";
 
-						img.replaceWith(vid);
+						if (parent) {
+							parent.appendChild(vid);
+						}
 					});
 				}, 3000);
 			}
