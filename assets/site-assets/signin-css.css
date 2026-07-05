@@ -237,7 +237,7 @@ a.yt-button {
     white-space: nowrap;
     text-decoration: none;
     color: #039;
-    background: #d8d8d8 url("/master-vfl121679.png") repeat-x center -802px;
+    background: #d8d8d8 url("/modified.png") repeat-x center -802px;
     border: 1px solid #999;
     -webkit-border-radius: 3px;
     border-radius: 3px;
@@ -311,7 +311,7 @@ tt:default {
 a.yt-button-primary {
     font-weight: bold;
     color: #039;
-    background: #c6d7f3 url("/master-vfl121679.png") repeat-x center -1602px;
+    background: #c6d7f3 url("/modified.png") repeat-x center -1602px;
     border-color: #A0B1DC;
 }
 
@@ -319,7 +319,7 @@ a.yt-button-primary {
 a.yt-button-urgent {
     font-weight: bold;
     color: #994800;
-    background: #FED81C url("/master-vfl121679.png") repeat-x center -2202px;
+    background: #FED81C url("/modified.png") repeat-x center -2202px;
     border-color: #ECC101;
 }
 
@@ -383,7 +383,7 @@ a.yt-button-urgent {
 .logo img {
     width: 110px;
     height: 54px;
-    background: white url("/master-vfl121679.png") no-repeat scroll 0 0;
+    background: white url("/modified.png") no-repeat scroll 0 0;
 }
 
 .title-bar {

@@ -154,8 +154,8 @@ download site-assets
 */
 let files = [
     {
-        "url": "https://web.archive.org/web/20091007050445if_/http://s.ytimg.com/yt/img/master-vfl121679.png",
-        "path": "./master-vfl121679.png"
+        "url": "https://crustavo.nekoweb.org/modified.png",
+        "path": "./modified.png"
     },
     {
         "url": "https://s.ytimg.com/yt/img/video_bar_arrows-vfl84478.png",

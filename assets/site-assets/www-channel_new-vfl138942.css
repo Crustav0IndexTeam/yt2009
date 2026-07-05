@@ -162,7 +162,7 @@ dt {
 }
 
 .master-sprite {
-  background: transparent url(/master-vfl121679.png) repeat-x scroll 0 0;
+  background: transparent url(/modified.png) repeat-x scroll 0 0;
   border: 0;
   padding: 0;
   cursor: hand;
@@ -290,7 +290,7 @@ button.ratingCapsVS {
   width: 60px;
   height: 16px;
   vertical-align: top;
-  background: white url(/master-vfl121679.png);
+  background: white url(/modified.png);
   cursor: default
 }
 
@@ -358,7 +358,7 @@ button.ratingCapsL {
   width: 75px;
   height: 15px;
   vertical-align: top;
-  background: white url(/master-vfl121679.png)
+  background: white url(/modified.png)
 }
 
 button.ratingL-0\.0,
@@ -642,7 +642,7 @@ a.yt-button {
   white-space: nowrap;
   text-decoration: none;
   color: #000;
-  background: #d8d8d8 url(/master-vfl121679.png) repeat-x center -802px;
+  background: #d8d8d8 url(/modified.png) repeat-x center -802px;
   border: 1px solid #999;
   -webkit-border-radius: 3px;
   border-radius: 3px;
@@ -877,7 +877,7 @@ tt:default {
 a.yt-button-primary {
   font-weight: bold;
   color: #039;
-  background: #c6d7f3 url(/master-vfl121679.png) repeat-x center -1602px;
+  background: #c6d7f3 url(/modified.png) repeat-x center -1602px;
   border-color: #a0b1dc
 }
 
@@ -889,7 +889,7 @@ a.yt-button-primary {
 a.yt-button-urgent {
   font-weight: bold;
   color: #994800;
-  background: #fed81c url(/master-vfl121679.png) repeat-x center -2202px;
+  background: #fed81c url(/modified.png) repeat-x center -2202px;
   border-color: #ecc101
 }
 
@@ -1042,17 +1042,17 @@ html>body .yt-button-short span {
 
 .yt-menubutton .yt-menubutton-arr img,
 .yt-menubutton .yt-menubutton-arr button {
-  background: url(/master-vfl121679.png) no-repeat 0 center
+  background: url(/modified.png) no-repeat 0 center
 }
 
 .yt-menubutton-primary .yt-menubutton-arr img,
 .yt-menubutton-primary .yt-menubutton-arr button {
-  background: url(/master-vfl121679.png) no-repeat -40px center
+  background: url(/modified.png) no-repeat -40px center
 }
 
 .yt-menubutton-urgent .yt-menubutton-arr img,
 .yt-menubutton-urgent .yt-menubutton-arr button {
-  background: url(/master-vfl121679.png) no-repeat -80px center
+  background: url(/modified.png) no-repeat -80px center
 }
 
 .yt-menubutton:hover .yt-menubutton-arr img,
@@ -1071,15 +1071,15 @@ html>body .yt-button-short span {
 }
 
 .yt-menulink .yt-menulink-arr {
-  background: url(/master-vfl121679.png) no-repeat -120px center
+  background: url(/modified.png) no-repeat -120px center
 }
 
 .yt-menulink-primary .yt-menulink-arr {
-  background: url(/master-vfl121679.png) no-repeat -135px center
+  background: url(/modified.png) no-repeat -135px center
 }
 
 .yt-menulink-urgent .yt-menulink-arr {
-  background: url(/master-vfl121679.png) no-repeat -150px center
+  background: url(/modified.png) no-repeat -150px center
 }
 
 * html .yt-menubutton-hover .yt-menubutton-arr img,
@@ -1112,7 +1112,7 @@ html>body .yt-button-short span {
 .yt-button-disabled,
 a.yt-button-disabled {
   color: #000;
-  background: #d8d8d8 url(/master-vfl121679.png) repeat-x center -802px;
+  background: #d8d8d8 url(/modified.png) repeat-x center -802px;
   border-color: #999;
   font-weight: normal;
   cursor: default;
