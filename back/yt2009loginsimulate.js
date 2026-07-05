@@ -26,7 +26,7 @@ const base_code_logged_out = `
 <span class="utility-item">
 	<a href="#"><strong>Create Account</strong></a>
 	<span class="utility-joiner">or</span>
-	<a href="/signin">Sign In</a>
+	<a href="/signin">Sign In (not recommended)</a>
 </span>`
 
 module.exports = function(req, code, returnNoLang) {
@@ -106,7 +106,7 @@ module.exports = function(req, code, returnNoLang) {
         code = code.replace(`Sign Out`, "lang_signout_btn")
         code = code.replace(`Create Account`, "lang_create_btn")
         code = code.replace(`>or<`, ">lang_or<")
-        code = code.replace(`Sign In`, "lang_sign_btn")
+        code = code.replace(`Sign In (not recommended)`, "lang_sign_btn")
     }
 
     return code;

@@ -157,7 +157,7 @@ if(!loginData.yExpire) {
         r.json().then(r => {
             if((r.playabilityStatus && r.playabilityStatus.status !== "OK"
             && r.playabilityStatus.reason
-            && r.playabilityStatus.reason.includes("Sign in to confirm"))
+            && r.playabilityStatus.reason.includes("Sign In (not recommended) to confirm"))
             || test_alwayssign) {
                 gredir_work = true;
                 console.log(failMsg.replace("$1", r.playabilityStatus.reason))

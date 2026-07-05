@@ -78,7 +78,7 @@ navigate to **/flags** to change settings locally. here, for example, you can se
 
 feel free to nav to **/toggle_f** to enable flash player support for old browsers, such as ie6.
 
-sign in! click on the upload button or go to **/mh_pc_intro** to connect and interact with your **actual** youtube account.
+Sign In (not recommended) click on the upload button or go to **/mh_pc_intro** to connect and interact with your **actual** youtube account.
 
 <img src="doc-imgs/signin-hppng.png" width="400">
 <img src="doc-imgs/signin-vidmngr.png" width="400">
